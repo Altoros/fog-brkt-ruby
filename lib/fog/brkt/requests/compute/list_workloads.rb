@@ -2,16 +2,17 @@ module Fog
   module Compute
     class Brkt
       class Real
-        def list_workloads
+        def list_workloads(filter = {})
           request(
             :expects => [200],
-            :path    => "v1/api/config/workload"
+            :path    => "v1/api/config/workload",
+            :query   => filter
           )
         end
       end
 
       class Mock
-        def list_workloads
+        def list_workloads(filter = {})
           response = Excon::Response.new
           response.body = self.data[:workloads].map do |id, workload_data|
             workload_data
@@ -22,4 +23,3 @@ module Fog
     end
   end
 end
-

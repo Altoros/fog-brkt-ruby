@@ -4,6 +4,10 @@ module Fog
   module Compute
     class Brkt
       class MachineType < Fog::Model
+        module Provider
+          AWS = 'AWS'
+        end
+
         # @!group Attributes
         identity :id
 

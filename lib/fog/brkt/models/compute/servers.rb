@@ -15,7 +15,7 @@ module Fog
         # scoped by workload and returns all servers otherwise
         #
         # @return [Array<Server>] servers
-        def all(filter={})
+        def all(filter = {})
           if workload.nil?
             load(service.list_servers(filter).body)
           else
@@ -41,7 +41,7 @@ module Fog
         #
         # @param [Hash] attributes server attributes
         # @return [Server] Server instance
-        def new(attributes={})
+        def new(attributes = {})
           instance = super
           instance.workload = workload if workload
           instance

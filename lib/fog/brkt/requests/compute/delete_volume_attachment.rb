@@ -2,19 +2,19 @@ module Fog
   module Compute
     class Brkt
       class Real
-        def list_servers(filter = {})
+        def delete_volume_attachment(id)
           request(
             :expects => [200],
-            :path    => "v2/api/config/instance",
-            :query   => filter
+            :method  => "DELETE",
+            :path    => "v1/api/config/brktvolumeattachment/#{id}"
           )
         end
       end
 
       class Mock
-        def list_servers(filter = {})
+        def delete_volume_attachment(id)
           response = Excon::Response.new
-          response.body = self.data[:servers].map { |id, server_data| server_data }
+          self.data[:volume_attachments].delete(id)
           response
         end
       end

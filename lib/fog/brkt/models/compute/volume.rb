@@ -81,6 +81,13 @@ module Fog
 
           "brkt-tgt:#{id}"
         end
+
+        # Get volume attachments
+        #
+        # @return [Array] Volume attachments
+        def attachments
+          service.volume_attachments(:bracket_volume => self.id)
+        end
       end
     end
   end

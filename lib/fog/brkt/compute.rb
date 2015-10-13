@@ -23,6 +23,8 @@ module Fog
       collection :volume_templates
       model      :volume
       collection :volumes
+      model      :volume_attachment
+      collection :volume_attachments
       model      :operating_system
       collection :operating_systems
       model      :image
@@ -112,8 +114,11 @@ module Fog
       request :update_volume
       request :get_volume
       request :list_volumes
-      request :list_instance_volumes
       request :create_volume_snapshot
+      request :create_volume_attachment
+      request :delete_volume_attachment
+      request :get_volume_attachment
+      request :list_volume_attachments
       request :create_computing_cell
       request :delete_computing_cell
       request :get_computing_cell
@@ -175,6 +180,10 @@ module Fog
           headers = params[:headers] || {}
           headers["Accept"]        = "application/json"
           headers["Content-type"]  = "application/json"
+
+          # Append query string *before* we build authentication header
+          params[:path] << query_string(params.delete(:query))
+
           headers["Authorization"] = build_auth(URI.join(api_host, params[:path]), params[:method])
 
           response = @connection.request(params.merge(
@@ -213,6 +222,30 @@ module Fog
           digestmsg = Base64.strict_encode64(hash)
           "MAC id=\"#{@public_access_token}\", ts=\"#{ts}\", nonce=\"#{nonce}\", mac=\"#{digestmsg}\""
         end
+
+        def query_string(query)
+          str = ''
+
+          case query
+          when String
+            str << '?' << (query.start_with?('?') ? query.slice(1) : query)
+          when Hash
+            str << '?'
+            query.sort_by { |k, _| k.to_s }.each do |key, values|
+              if values.nil?
+                str << key.to_s << '&'
+              else
+                [values].flatten.each do |value|
+                  str << key.to_s << '=' << CGI.escape(value.to_s) << '&'
+                end
+              end
+            end
+
+            str.chop! # remove trailing '&'
+          end
+
+          str
+        end
       end
 
       class Mock
@@ -228,110 +261,111 @@ module Fog
 
         def self.data
           @data ||= {
-            :customer             => {
+            :customer                 => {
               :id   => Fog::Brkt::Mock.id,
               :name => Fog::Brkt::Mock.name
             },
-            :computing_cells         => {},
-            :billing_groups          => {},
-            :workload_templates      => {},
-            :workloads               => {},
-            :server_templates        => {},
-            :servers                 => {},
-            :volume_templates        => {},
-            :volumes                 => {},
-            :networks                => {},
-            :security_groups         => {},
-            :security_group_rules    => {},
-            :load_balancer_templates => {},
-            :load_balancers          => {},
-            :load_balancer_listeners => {},
-            :zones                => {
+            :computing_cells          => {},
+            :billing_groups           => {},
+            :workload_templates       => {},
+            :workloads                => {},
+            :server_templates         => {},
+            :servers                  => {},
+            :volume_templates         => {},
+            :volume_attachments       => {},
+            :volumes                  => {},
+            :networks                 => {},
+            :security_groups          => {},
+            :security_group_rules     => {},
+            :load_balancer_templates  => {},
+            :load_balancers           => {},
+            :load_balancer_listeners  => {},
+            :zones                    => {
               "df43995a1d8a48d28b835238bfd079b4" => {
-                "id"                   => "df43995a1d8a48d28b835238bfd079b4",
-                "name"                 => "customer",
-                "customer"             => "ffffffffffff4fffafffffffffffff00",
-                "use_main_route_table" => false,
-                "network"              => "2ebf551a7de24bfea2280dcdc79ae0df",
-                "description"          => "",
-                "modified_time"        => "2015-02-23T22:18:59.064137+00:00",
-                "requested_state"      => "AVAILABLE",
-                "created_by"           => "user@example.com",
-                "created_time"         => "2015-02-23T22:18:59.064097+00:00",
-                "modified_by"          => "user@example.com",
-                "cidr_block"           => "10.0.0.0/18",
-                "metadata"             => {},
-                "provider_zone"        => {
-                  "state" => "IGNORE",
-                  "why"   => ""
+                "id"                    => "df43995a1d8a48d28b835238bfd079b4",
+                "name"                  => "customer",
+                "customer"              => "ffffffffffff4fffafffffffffffff00",
+                "use_main_route_table"  => false,
+                "network"               => "2ebf551a7de24bfea2280dcdc79ae0df",
+                "description"           => "",
+                "modified_time"         => "2015-02-23T22:18:59.064137+00:00",
+                "requested_state"       => "AVAILABLE",
+                "created_by"            => "user@example.com",
+                "created_time"          => "2015-02-23T22:18:59.064097+00:00",
+                "modified_by"           => "user@example.com",
+                "cidr_block"            => "10.0.0.0/18",
+                "metadata"              => {},
+                "provider_zone"         => {
+                  "state"                 => "IGNORE",
+                  "why"                   => ""
                 }
               }
             },
-            :machine_types   => {
+            :machine_types            => {
               "565f94793df94bbba3f45ae2745ee23a" => {
-                "cpu_cores"            => 4,
-                "supports_pv"          => true,
-                "provider"             => 1,
-                "encrypted_storage_gb" => 36.0,
-                "ram"                  => 15.0,
-                "id"                   => "565f94793df94bbba3f45ae2745ee23a",
-                "hourly_cost"          => "0.49",
-                "storage_gb"           => 80
+                "cpu_cores"             => 4,
+                "supports_pv"           => true,
+                "provider"              => 1,
+                "encrypted_storage_gb"  => 36.0,
+                "ram"                   => 15.0,
+                "id"                    => "565f94793df94bbba3f45ae2745ee23a",
+                "hourly_cost"           => "0.49",
+                "storage_gb"            => 80
               }
             },
-            :images => {
+            :images                   => {
               "f789efac46bf43c792e51b73d28fc398" => {
-                "id"                 => "f789efac46bf43c792e51b73d28fc398",
-                "name"               => "Ubuntu 13.10 Saucy (64 bit)",
-                "customer"           => nil,
-                "os_settings"        => {"mounts.options" => "nobootwait"},
-                "modified_by"        => nil,
-                "description"        => "",
-                "unencrypted_parent" => nil,
-                "csp_images"         => "/v1/api/config/imagedefinition/f789efac46bf43c792e51b73d28fc398/cspimages",
-                "created_by"         => nil,
-                "is_encrypted"       => false,
-                "metadata"           => {},
-                "state"              => "READY",
-                "modified_time"      => "2015-02-23T22:03:47.036014+00:00",
-                "created_time"       => "2015-02-23T22:03:47.035985+00:00",
-                "is_base"            => true,
-                "os"                 => {
-                  "customer"      => nil,
-                  "modified_by"   => nil,
-                  "description"   => "",
-                  "os_features"   => {},
-                  "modified_time" => "2015-02-23T22:03:46.944208+00:00",
-                  "label"         => "Ubuntu 13.10 Saucy (64 bit)",
-                  "platform"      => "linux",
-                  "version"       => "13.10",
-                  "created_by"    => nil,
-                  "created_time"  => "2015-02-23T22:03:46.944180+00:00",
-                  "metadata"      => {},
-                  "id"            => "bd2c801afb174ca9baba61363a2a5554",
-                  "name"          => "ubuntu"
+                "id"                    => "f789efac46bf43c792e51b73d28fc398",
+                "name"                  => "Ubuntu 13.10 Saucy (64 bit)",
+                "customer"              => nil,
+                "os_settings"           => {"mounts.options" => "nobootwait"},
+                "modified_by"           => nil,
+                "description"           => "",
+                "unencrypted_parent"    => nil,
+                "csp_images"            => "/v1/api/config/imagedefinition/f789efac46bf43c792e51b73d28fc398/cspimages",
+                "created_by"            => nil,
+                "is_encrypted"          => false,
+                "metadata"              => {},
+                "state"                 => "READY",
+                "modified_time"         => "2015-02-23T22:03:47.036014+00:00",
+                "created_time"          => "2015-02-23T22:03:47.035985+00:00",
+                "is_base"               => true,
+                "os"                    => {
+                  "customer"              => nil,
+                  "modified_by"           => nil,
+                  "description"           => "",
+                  "os_features"           => {},
+                  "modified_time"         => "2015-02-23T22:03:46.944208+00:00",
+                  "label"                 => "Ubuntu 13.10 Saucy (64 bit)",
+                  "platform"              => "linux",
+                  "version"               => "13.10",
+                  "created_by"            => nil,
+                  "created_time"          => "2015-02-23T22:03:46.944180+00:00",
+                  "metadata"              => {},
+                  "id"                    => "bd2c801afb174ca9baba61363a2a5554",
+                  "name"                  => "ubuntu"
                 }
               },
             },
-            :csp_images => {},
-            :operating_systems => {
+            :csp_images               => {},
+            :operating_systems        => {
               "60e32d5fe379431392f89fbdcd380da4" => {
-                "id" => "60e32d5fe379431392f89fbdcd380da4",
-                "customer" => nil,
-                "modified_by" => nil,
-                "description" => "",
-                "os_features" => {},
-                "modified_time" => "2015-02-23T22:03:46.991053+00:00",
-                "label" => "Bracket Ubuntu 14.04 Trusty (64 bit)",
-                "platform" => "linux",
-                "version" => "14.04",
-                "created_by" => nil,
-                "created_time" => "2015-02-23T22:03:46.991024+00:00",
-                "metadata" => {},
-                "name" => "ubuntu"
+                "id"                    => "60e32d5fe379431392f89fbdcd380da4",
+                "customer"              => nil,
+                "modified_by"           => nil,
+                "description"           => "",
+                "os_features"           => {},
+                "modified_time"         => "2015-02-23T22:03:46.991053+00:00",
+                "label"                 => "Bracket Ubuntu 14.04 Trusty (64 bit)",
+                "platform"              => "linux",
+                "version"               => "14.04",
+                "created_by"            => nil,
+                "created_time"          => "2015-02-23T22:03:46.991024+00:00",
+                "metadata"              => {},
+                "name"                  => "ubuntu"
               }
             },
-            :cloudinits => {},
+            :cloudinits               => {},
           }
         end
 

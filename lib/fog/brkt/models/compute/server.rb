@@ -1,3 +1,4 @@
+require "securerandom"
 require "fog/compute/models/server"
 
 module Fog
@@ -157,23 +158,34 @@ module Fog
         #
         # @return [Volumes] volumes collection
         def volumes
-          service.volumes(:instance => self)
+          service.volume_attachments(:instance => id).map do |attachment|
+            service.volumes.get(attachment.bracket_volume)
+          end
         end
 
         # Attach volume to a server
         #
         # @param [Volume] volume
-        # @return [void]
-        def attach_volume(volume)
-          volume.instance = identity
-          volume.save
+        # @param [String] name
+        # @param [Hash] attributes
+        # @return [Boolean]
+        def attach_volume(volume, name = nil, attributes = {})
+          # For backwards compatibility
+          name = "Attachment_#{SecureRandom.hex(2)}" if name.nil?
+          attributes = {
+            :instance       => id,
+            :bracket_volume => volume.id,
+            :name           => name,
+          }.merge(attributes)
+          attachment = service.volume_attachments.new(attributes)
+          attachment.save
         end
 
         # Check if volume attached to a server
         #
         # @return [Boolean]
         def attached?(volume)
-          not volumes.find { |v| v.identity == volume.identity }.nil?
+          !!service.volume_attachments(:instance => id).find { |attachment| attachment.bracket_volume == volume.id }
         end
 
         attr_accessor :ssh_username

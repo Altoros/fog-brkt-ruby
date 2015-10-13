@@ -17,9 +17,13 @@ module Fog
         # Get cloud init by ID
         #
         # @param [String] id Cloud init id
-        # @return [Cloudinit] Cloud init
+        # @return [Cloudinit,nil] Cloud init if found, nil otherwise
         def get(id)
-          new(service.get_cloudinit(id).body)
+          begin
+            new(service.get_cloudinit(id).body)
+          rescue Excon::Errors::NotFound
+            nil
+          end
         end
       end
     end

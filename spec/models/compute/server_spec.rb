@@ -34,9 +34,9 @@ describe Fog::Compute::Brkt::Server do
       @billing_group.destroy if @billing_group
     end
 
-    describe "#attach_volume" do
+    describe "#attached?" do
       let(:volume) do
-        compute.volumes.create(
+        v = compute.volumes.create(
           :name              => Fog::Brkt::Mock.name,
           :computing_cell_id => @cell.id,
           :billing_group_id  => @billing_group.id,
@@ -44,24 +44,8 @@ describe Fog::Compute::Brkt::Server do
           :iops              => 100,
           :iops_max          => 200
         )
-      end
-
-      before { @server.attach_volume(volume) }
-
-      it { expect(volume.instance).to eq @server.id }
-    end
-
-    describe "#attached?" do
-      let(:volume) do
-        compute.volumes.create(
-          :name              => Fog::Brkt::Mock.name,
-          :computing_cell_id => @cell.id,
-          :billing_group_id  => @billing_group.id,
-          :size_in_gb        => 10,
-          :iops              => 100,
-          :iops_max          => 200,
-          :instance          => @server.id
-        )
+        @server.attach_volume(v)
+        v
       end
       let(:not_attached_volume) do
         compute.volumes.create(
