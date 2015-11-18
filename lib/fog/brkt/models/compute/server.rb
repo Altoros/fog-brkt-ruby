@@ -1,4 +1,5 @@
 require "fog/compute/models/server"
+require "net/ssh"
 
 module Fog
   module Compute
@@ -220,7 +221,9 @@ module Fog
         def upload(local_path, remote_path, upload_options = {})
           requires :ssh_ip_address, :ssh_username
 
-          Fog::SCP.new(ssh_ip_address, ssh_username, ssh_options).upload(local_path, remote_path, upload_options)
+          options = ssh_options.merge(upload_options)
+
+          Fog::SCP.new(ssh_ip_address, ssh_username, options).upload(local_path, remote_path)
         end
 
         # Download file from server using SCP
@@ -231,7 +234,9 @@ module Fog
         def download(remote_path, local_path, download_options = {})
           requires :ssh_ip_address, :ssh_username
 
-          Fog::SCP.new(ssh_ip_address, ssh_username, ssh_options).download(remote_path, local_path, download_options)
+          options = ssh_options.merge(download_options)
+
+          Fog::SCP.new(ssh_ip_address, ssh_username, options).download(remote_path, local_path)
         end
 
         # Run commands on server with SSH

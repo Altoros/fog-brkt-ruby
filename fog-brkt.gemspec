@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.4"
   spec.add_development_dependency "rspec", "~> 3.2"
 
+  spec.add_dependency "net-ssh", "~> 3.0.1"
+  spec.add_dependency "net-scp", "~> 1.2.1"
   spec.add_dependency "fog-core", "~> 1.29"
   spec.add_dependency "fog-xml", "~> 0.1"
   spec.add_dependency "fog-json", "~> 1.0"
