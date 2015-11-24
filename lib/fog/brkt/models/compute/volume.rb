@@ -24,6 +24,7 @@ module Fog
         attribute :expired,                                                     :type => :boolean
         attribute :auto_snapshot_duration_days,                                 :type => :integer
         attribute :provider_bracket_volume
+        attribute :iscsi_target_ip
         # @!endgroup
 
         def initialize(attributes={})
@@ -73,6 +74,12 @@ module Fog
             "billing_group" => billing_group # TODO: customize?
           }).body
           collection.new(snapshot_data)
+        end
+
+        def target_name
+          requires :id
+
+          "brkt-tgt:#{id}"
         end
       end
     end
