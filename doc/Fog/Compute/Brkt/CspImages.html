@@ -175,6 +175,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#get-instance_method" title="#get (instance method)">- (CspImage) <strong>get</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get cloud service provider image by ID.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#new-instance_method" title="#new (instance method)">- (CspImage) <strong>new</strong>(attributes = {}) </a>
     
 
@@ -335,6 +359,85 @@ field to collection&#39;s <span class='object_link'><a href="#image-instance_met
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="get-instance_method">
+  
+    - (<tt><span class='object_link'><a href="CspImage.html" title="Fog::Compute::Brkt::CspImage (class)">CspImage</a></span></tt>) <strong>get</strong>(id) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get cloud service provider image by ID</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>CSP image id</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="CspImage.html" title="Fog::Compute::Brkt::CspImage (class)">CspImage</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>cloud service provider image</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/csp_images.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_get_csp_image'>get_csp_image</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="new-instance_method">
   
     - (<tt><span class='object_link'><a href="CspImage.html" title="Fog::Compute::Brkt::CspImage (class)">CspImage</a></span></tt>) <strong>new</strong>(attributes = {}) 
@@ -427,9 +530,9 @@ field to collection&#39;s <span class='object_link'><a href="#image-instance_met
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 23 18:03:09 2015 by
+  Generated on Tue Oct 13 16:20:05 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

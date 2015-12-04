@@ -479,15 +479,15 @@
       <pre class="lines">
 
 
-37
-38
-39
-40
-41
-42</pre>
+44
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/csp_image.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/csp_image.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
@@ -624,15 +624,29 @@
 29
 30
 31
-32</pre>
+32
+33
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/csp_image.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span>
-  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:provider</span><span class='comma'>,</span> <span class='symbol'>:image_definition</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_persisted?'>persisted?</span>
+    <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
 
-  <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_create_csp_image'>create_csp_image</span><span class='lparen'>(</span><span class='id identifier rubyid_attributes'>attributes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+    <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_update_csp_image'>update_csp_image</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_attributes'>attributes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:provider</span><span class='comma'>,</span> <span class='symbol'>:image_definition</span>
+
+    <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_create_csp_image'>create_csp_image</span><span class='lparen'>(</span><span class='id identifier rubyid_attributes'>attributes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_merge_attributes'>merge_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -672,9 +686,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 23 18:03:08 2015 by
+  Generated on Tue Oct 13 16:20:05 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

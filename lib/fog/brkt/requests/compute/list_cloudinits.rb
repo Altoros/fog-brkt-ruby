@@ -13,7 +13,7 @@ module Fog
       class Mock
         def list_cloudinits
           response = Excon::Response.new
-          response.body = self.data[:billing_groups].values
+          response.body = self.data[:cloudinits].values
           response
         end
       end

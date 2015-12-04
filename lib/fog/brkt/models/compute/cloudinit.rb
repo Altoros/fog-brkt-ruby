@@ -38,7 +38,7 @@ module Fog
           true
         end
 
-        # Delete server template
+        # Delete cloud init.
         #
         # @return [true]
         def destroy

@@ -105,9 +105,11 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Server/State.html" title="Fog::Compute::Brkt::Server::State (module)">State</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Server/State.html" title="Fog::Compute::Brkt::Server::State (module)">State</a></span>, <span class='object_link'><a href="Server/StateRequest.html" title="Fog::Compute::Brkt::Server::StateRequest (module)">StateRequest</a></span>
     
   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Server/InvalidStateError.html" title="Fog::Compute::Brkt::Server::InvalidStateError (class)">InvalidStateError</a></span>
     
   
 </p>
@@ -125,6 +127,28 @@
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cloudinit-instance_method" title="#cloudinit (instance method)">- (Object) <strong>cloudinit</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -394,6 +418,50 @@
   <span class="summary_signature">
     
       <a href="#ram-instance_method" title="#ram (instance method)">- (Object) <strong>ram</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#requested_state-instance_method" title="#requested_state (instance method)">- (Object) <strong>requested_state</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#security_groups-instance_method" title="#security_groups (instance method)">- (Object) <strong>security_groups</strong> </a>
     
 
     
@@ -746,6 +814,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#start-instance_method" title="#start (instance method)">- (true) <strong>start</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Start server.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#state-instance_method" title="#state (instance method)">- (String) <strong>state</strong> </a>
     
 
@@ -761,6 +853,30 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#stop-instance_method" title="#stop (instance method)">- (true) <strong>stop</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Stop server.</p>
+</div></span>
   
 </li>
 
@@ -866,14 +982,14 @@
       <pre class="lines">
 
 
-41
-42
-43
-44
-45</pre>
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -933,13 +1049,13 @@
       <pre class="lines">
 
 
-135
-136
-137
-138</pre>
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attach_volume'>attach_volume</span><span class='lparen'>(</span><span class='id identifier rubyid_volume'>volume</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_volume'>volume</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span> <span class='op'>=</span> <span class='id identifier rubyid_identity'>identity</span>
@@ -989,16 +1105,42 @@
       <pre class="lines">
 
 
-143
-144
-145</pre>
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attached?'>attached?</span><span class='lparen'>(</span><span class='id identifier rubyid_volume'>volume</span><span class='rparen'>)</span>
   <span class='kw'>not</span> <span class='id identifier rubyid_volumes'>volumes</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span> <span class='op'>==</span> <span class='id identifier rubyid_volume'>volume</span><span class='period'>.</span><span class='id identifier rubyid_identity'>identity</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cloudinit-instance_method">
+  
+    - (<tt>Object</tt>) <strong>cloudinit</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 42</span>
+
+<span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:cloudinit</span><span class='comma'>,</span>          <span class='symbol'>:aliases</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cloudinit_id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:cloudinit_id</span><span class='rbracket'>]</span></pre>
     </td>
   </tr>
 </table>
@@ -1019,10 +1161,10 @@
       <pre class="lines">
 
 
-25</pre>
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 33</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:cpu_cores</span><span class='comma'>,</span>                                          <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='symbol'>:integer</span></pre>
     </td>
@@ -1045,10 +1187,10 @@
       <pre class="lines">
 
 
-20</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 27</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:description</span></pre>
     </td>
@@ -1095,15 +1237,15 @@
       <pre class="lines">
 
 
-117
-118
-119
-120
-121
-122</pre>
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
@@ -1153,12 +1295,12 @@
       <pre class="lines">
 
 
-56
-57
-58</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_failed?'>failed?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>FAILED</span>
@@ -1183,10 +1325,10 @@
       <pre class="lines">
 
 
-17</pre>
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 24</span>
 
 <span class='id identifier rubyid_identity'>identity</span> <span class='symbol'>:id</span></pre>
     </td>
@@ -1209,10 +1351,10 @@
       <pre class="lines">
 
 
-22</pre>
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 30</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:image_definition</span><span class='comma'>,</span>   <span class='symbol'>:aliases</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>image_id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:image_id</span><span class='rbracket'>]</span></pre>
     </td>
@@ -1235,10 +1377,10 @@
       <pre class="lines">
 
 
-28</pre>
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 36</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:internet_accessible</span><span class='comma'>,</span>                                <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='symbol'>:boolean</span></pre>
     </td>
@@ -1283,12 +1425,12 @@
       <pre class="lines">
 
 
-76
-77
-78</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_internet_accessible?'>internet_accessible?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_internet_accessible'>internet_accessible</span>
@@ -1313,10 +1455,10 @@
       <pre class="lines">
 
 
-29</pre>
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 37</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:internet_ip_address</span></pre>
     </td>
@@ -1339,10 +1481,10 @@
       <pre class="lines">
 
 
-27</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 35</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:ip_address</span></pre>
     </td>
@@ -1365,10 +1507,10 @@
       <pre class="lines">
 
 
-30</pre>
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 38</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:load_balancer</span></pre>
     </td>
@@ -1391,10 +1533,10 @@
       <pre class="lines">
 
 
-23</pre>
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 31</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:machine_type</span><span class='comma'>,</span>       <span class='symbol'>:aliases</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>machine_type_id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:machine_type_id</span><span class='rbracket'>]</span></pre>
     </td>
@@ -1417,10 +1559,10 @@
       <pre class="lines">
 
 
-33</pre>
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 41</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:metadata</span></pre>
     </td>
@@ -1443,10 +1585,10 @@
       <pre class="lines">
 
 
-19</pre>
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 26</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:name</span></pre>
     </td>
@@ -1491,12 +1633,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_powered_off?'>powered_off?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>POWERED_OFF</span>
@@ -1543,12 +1685,12 @@
       <pre class="lines">
 
 
-60
-61
-62</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_powering_off?'>powering_off?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>POWERING_OFF</span>
@@ -1573,10 +1715,10 @@
       <pre class="lines">
 
 
-26</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 34</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:provider_instance</span></pre>
     </td>
@@ -1599,10 +1741,10 @@
       <pre class="lines">
 
 
-24</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 32</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:ram</span><span class='comma'>,</span>                                                <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='symbol'>:float</span></pre>
     </td>
@@ -1647,12 +1789,12 @@
       <pre class="lines">
 
 
-52
-53
-54</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ready?'>ready?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>READY</span>
@@ -1701,15 +1843,15 @@
       <pre class="lines">
 
 
-107
-108
-109
-110
-111
-112</pre>
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reboot'>reboot</span>
   <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
@@ -1717,6 +1859,32 @@
   <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_reboot_server'>reboot_server</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="requested_state-instance_method">
+  
+    - (<tt>Object</tt>) <strong>requested_state</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 29</span>
+
+<span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:requested_state</span></pre>
     </td>
   </tr>
 </table>
@@ -1762,16 +1930,6 @@
       <pre class="lines">
 
 
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
 95
 96
 97
@@ -1779,10 +1937,20 @@
 99
 100
 101
-102</pre>
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_persisted?'>persisted?</span>
@@ -1808,6 +1976,32 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="security_groups-instance_method">
+  
+    - (<tt>Object</tt>) <strong>security_groups</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 43</span>
+
+<span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:security_groups</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="service_name-instance_method">
   
     - (<tt>Object</tt>) <strong>service_name</strong> 
@@ -1822,10 +2016,10 @@
       <pre class="lines">
 
 
-31</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 39</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:service_name</span></pre>
     </td>
@@ -1848,12 +2042,74 @@
       <pre class="lines">
 
 
-32</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 40</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:service_name_fqdn</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="start-instance_method">
+  
+    - (<tt>true</tt>) <strong>start</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Start server</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_start'>start</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
+  <span class='id identifier rubyid_raise_invalid_state'>raise_invalid_state</span><span class='lparen'>(</span><span class='const'>State</span><span class='op'>::</span><span class='const'>POWERED_OFF</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_powered_off?'>powered_off?</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_requested_state'>requested_state</span> <span class='op'>=</span> <span class='const'>StateRequest</span><span class='op'>::</span><span class='const'>AVAILABLE</span>
+  <span class='id identifier rubyid_save'>save</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1896,15 +2152,77 @@
       <pre class="lines">
 
 
-48
-49
-50</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
   <span class='id identifier rubyid_provider_instance'>provider_instance</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>state</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stop-instance_method">
+  
+    - (<tt>true</tt>) <strong>stop</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Stop server</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stop'>stop</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:id</span>
+  <span class='id identifier rubyid_raise_invalid_state'>raise_invalid_state</span><span class='lparen'>(</span><span class='const'>State</span><span class='op'>::</span><span class='const'>READY</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_ready?'>ready?</span>
+
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_requested_state'>requested_state</span> <span class='op'>=</span> <span class='const'>StateRequest</span><span class='op'>::</span><span class='const'>STOPPED</span>
+  <span class='id identifier rubyid_save'>save</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1948,12 +2266,12 @@
       <pre class="lines">
 
 
-72
-73
-74</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_terminated?'>terminated?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>TERMINATED</span>
@@ -2000,12 +2318,12 @@
       <pre class="lines">
 
 
-68
-69
-70</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_terminating?'>terminating?</span>
   <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='const'>State</span><span class='op'>::</span><span class='const'>TERMINATING</span>
@@ -2059,12 +2377,12 @@
       <pre class="lines">
 
 
-127
-128
-129</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_volumes'>volumes</span>
   <span class='id identifier rubyid_service'>service</span><span class='period'>.</span><span class='id identifier rubyid_volumes'>volumes</span><span class='lparen'>(</span><span class='symbol'>:instance</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='rparen'>)</span>
@@ -2089,10 +2407,10 @@
       <pre class="lines">
 
 
-21</pre>
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/fog/brkt/models/compute/server.rb', line 28</span>
 
 <span class='id identifier rubyid_attribute'>attribute</span> <span class='symbol'>:workload</span></pre>
     </td>
@@ -2105,9 +2423,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jul 23 18:03:08 2015 by
+  Generated on Tue Oct 13 16:20:04 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.2).
+  0.8.7.6 (ruby-2.2.3).
 </div>
 
   </body>

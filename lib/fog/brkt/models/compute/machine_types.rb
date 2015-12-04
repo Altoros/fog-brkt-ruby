@@ -7,11 +7,15 @@ module Fog
       class MachineTypes < Fog::Collection
         model Fog::Compute::Brkt::MachineType
 
+        # @return [String]
+        attr_accessor :provider
+
         # Get machine types
         #
         # @return [Array<MachineType>] machine types
-        def all
-          load(service.list_machine_types.body)
+        def all(filter = {})
+          filter[:provider] = provider unless provider.nil?
+          load(service.list_machine_types(filter).body)
         end
 
         # Get machine type by ID

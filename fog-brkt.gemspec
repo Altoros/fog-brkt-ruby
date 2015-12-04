@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{This library can be used as a module for `fog` or as standalone provider
                         to use the Bracket Computing services in applications..}
   spec.homepage      = "https://github.com/brkt/fog-brkt-ruby"
-  spec.license       = "Apaceh 2.0"
+  spec.license       = "Apache 2.0"
 
   spec.files         = Dir['*.rb'] + Dir['lib/**/*'] + Dir['spec/**/*'] + Dir['doc/**/*']
   spec.files         += Dir['fog-brkt.gemspec'] + Dir['Gemfile'] + Dir['Rakefile'] + Dir['*.md']
@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rake", "~> 10.4"
   spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency "awesome_print"
 
   spec.add_dependency "fog-core", "~> 1.29"
   spec.add_dependency "fog-xml", "~> 0.1"
