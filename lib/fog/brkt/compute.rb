@@ -57,6 +57,8 @@ module Fog
       collection :load_balancer_listeners
       model      :cloudinit
       collection :cloudinits
+      model      :vpn
+      collection :vpns
 
       request_path "fog/brkt/requests/compute"
       request :get_customer
@@ -152,6 +154,9 @@ module Fog
       request :get_cloudinit
       request :list_cloudinits
       request :get_server_free_volume_attach_points
+      request :list_vpns
+      request :create_vpn
+      request :delete_vpn
 
       class Real
         # @return [String] api host
@@ -366,6 +371,7 @@ module Fog
               }
             },
             :cloudinits               => {},
+            :vpns                     => {}
           }
         end
 

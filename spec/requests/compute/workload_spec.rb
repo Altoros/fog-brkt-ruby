@@ -54,7 +54,7 @@ describe "workload requests" do
     end
   end
 
- describe "#update_workload" do
+  describe "#update_workload" do
     before(:all) do
       @workload = compute.workloads.create({
         :name          => Fog::Brkt::Mock.name,
