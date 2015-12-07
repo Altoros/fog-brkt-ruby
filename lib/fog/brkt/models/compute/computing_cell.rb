@@ -80,6 +80,13 @@ module Fog
             true
           end
         end
+
+        # Get VPNs associated with computing cell
+        #
+        # @return [Vpns] VPNs collection
+        def vpns
+          service.vpns(computing_cell: self)
+        end
       end
     end
   end
